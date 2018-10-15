@@ -1,0 +1,5 @@
+{
+  "port" : 8080,
+  "url" : "/test/get",
+  "response" : "{ \"response\" : \"text\" }"
+}
