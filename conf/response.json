@@ -1,5 +1,25 @@
 {
   "port" : 8080,
-  "url" : "/test/get",
-  "response" : "{ \"response\" : \"text\" }"
+  "username" : "admin",
+  "password" : "pass1234",
+  "get" : [
+    {
+    "url" : "/test/get/:id",
+    "response" : "{ \"response\" : \"get text\" }"
+  },
+  {
+  "url" : "/test/get1/:id/list",
+  "response" : "{ \"response\" : \"get text\" }"
+}
+    ],
+  "post" : [
+     {
+      "url" : "/test/post",
+      "response" : "{ \"response\" : \"post text\" }"
+    },
+    {
+     "url" : "/test/post/add",
+     "response" : "{ \"response\" : \"post text\" }"
+   }
+  ]
 }
