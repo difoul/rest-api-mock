@@ -5,21 +5,24 @@
   "get" : [
     {
     "url" : "/test/get/:id",
-    "response" : "{ \"response\" : \"get text\" }"
+    "response" : "{ \"response\" : \"get text\" }",
+    "response_code" : 500
   },
   {
   "url" : "/test/get1/:id/list",
-  "response" : "{ \"response\" : \"get text\" }"
+  "response" : "{ \"response\" : \"get text 2\" }"
 }
     ],
   "post" : [
      {
       "url" : "/test/post",
-      "response" : "{ \"response\" : \"post text\" }"
+      "response" : "{ \"response\" : \"post text\" }",
+      "response_code" : 201
     },
     {
      "url" : "/test/post/add",
-     "response" : "{ \"response\" : \"post text\" }"
+     "response" : "{ \"response\" : \"post text\" }",
+     "response_code" : 200
    }
   ]
 }

@@ -2,7 +2,6 @@ package models
 
 import (
 	"fmt"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,8 +15,16 @@ type HttpMock struct {
 }
 
 type Response struct {
-	Url  string `json:"url"`
-	Resp string `json:"response"`
+	Url      string `json:"url"`
+	Resp     string `json:"response"`
+	RespCode int    `json:"response_code"`
+}
+
+func (r *Response) HandleResponse(c *gin.Context) {
+	if r.RespCode < 100 || r.RespCode > 527 {
+		r.RespCode = 200
+	}
+	c.Data(r.RespCode, "application/json; charset=utf-8", []byte(r.Resp))
 }
 
 func (m *HttpMock) RegisterEndpoints(engine *gin.Engine) {
@@ -27,15 +34,14 @@ func (m *HttpMock) RegisterEndpoints(engine *gin.Engine) {
 	}
 
 	for _, g := range m.Get {
-		router.GET(g.Url, func(c *gin.Context) {
-			c.Data(http.StatusOK, "application/json; charset=utf-8", []byte(g.Resp))
-		})
+		// https://stackoverflow.com/questions/48826460/using-pointers-in-a-for-loop-golang
+		get := g
+		router.GET(get.Url, get.HandleResponse)
 	}
 
 	for _, p := range m.Post {
-		router.POST(p.Url, func(c *gin.Context) {
-			c.Data(http.StatusOK, "application/json; charset=utf-8", []byte(p.Resp))
-		})
+		post := p
+		router.POST(p.Url, post.HandleResponse)
 	}
 
 	engine.Run(fmt.Sprintf(":%d", m.Port))
